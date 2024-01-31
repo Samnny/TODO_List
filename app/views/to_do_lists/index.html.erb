@@ -1,0 +1,65 @@
+<!-- Contêiner principal para centralização vertical e horizontal -->
+<div class="flex flex-col items-center mx-auto mt-16">
+
+  <!-- Título "To Do List" -->
+  <h1 class="text-2xl font-semibold mb-8 text-center">To Do List</h1>
+
+  <!-- Formulário para Adicionar Nova Lista -->
+  <%= form_with(model: ToDoList.new, class: "my-5") do |form| %>
+    <div class="flex items-center mb-4">
+      <%= form.label :name, class: "mr-4" %>
+      <%= form.text_field :name, placeholder: "New List", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 w-2/4" %>
+      <%= form.submit class: "ml-4 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium cursor-pointer" %>
+    </div>
+  <% end %>
+
+  <!-- Listas de To Do -->
+  <% @to_do_lists.each do |to_do_list| %>
+    <div class="mb-8">
+      <!-- Título da Lista -->
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold"><%= to_do_list.name %></h2>
+        <%= link_to "+", to_do_list_path(to_do_list), class: "ml-4 bg-green-500 text-white py-2 px-4 rounded-full" %>
+        <%= link_to "!", edit_to_do_list_path(to_do_list), class: "ml-4 bg-yellow-500 text-white py-2 px-4 rounded-full" %>
+        <%= button_to "x", to_do_list_path(to_do_list), method: :delete, data: { confirm: 'Tem certeza?' }, class: "ml-4 bg-red-500 text-white py-2 px-4 rounded-full" %>
+
+      </div>
+
+      <!-- Tabela de Itens da Lista -->
+      <table class="w-full border-separate table-auto text-slate-500">
+        <thead>
+          <tr>
+            <th class="p-3 text-sm font-semibold text-left text-gray-700 bg-gray-200">ID</th>
+            <th class="p-3 text-sm font-semibold text-left text-gray-700 bg-gray-200">Description</th>
+            <th class="p-3 text-sm font-semibold text-left text-gray-700 bg-gray-200">Edit</th>
+            <th class="p-3 text-sm font-semibold text-left text-gray-700 bg-gray-200">Delete</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Itens da Lista -->
+          <% to_do_list.to_do_items.each do |item| %>
+            <tr>
+              <td class="px-3 py-4 text-sm font-normal text-left text-gray-600 bg-gray-50"><%= item.id %></td>
+              <td class="px-3 py-4 text-sm font-normal text-left text-gray-600 bg-gray-50"><%= item.description %></td>
+              <td class="px-3 py-4 text-sm font-normal text-left text-green-600 underline break-words bg-light">
+                <%= link_to "Editar", edit_to_do_list_to_do_item_path(to_do_list, item), method: :update %>
+              </td>
+              <td class="px-3 py-4 text-sm font-normal text-left text-red-600 underline break-words bg-light">
+                <%= button_to "Excluir", to_do_list_to_do_item_path(to_do_list, item), method: :delete %>
+              </td>
+              
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+
+
+     
+
+    </div>
+  <% end %>
+  
+
+</div>

@@ -1,0 +1,18 @@
+<!-- app/views/to_do_lists/index.html.erb -->
+
+<div class="flex flex-col items-center mx-auto mt-16">
+
+  <!-- Título da Lista -->
+  <h1 class="text-2xl font-semibold mb-8"><%= @to_do_list.name %></h1>
+
+  <!-- Formulário para Adicionar Novo Item -->
+  <%= form_with(model: ToDoItem.new, url: to_do_list_to_do_items_path(@to_do_list), class: "my-5") do |form| %>
+    <div class="flex items-center mb-4">
+      <%= form.label :description, class: "mr-4" %>
+      <%= form.text_field :description, placeholder: "New item", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 w-2/4" %>
+      <%= form.submit class: "ml-4 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium cursor-pointer" %>
+    </div>
+  <% end %>
+
+ 
+</div>
